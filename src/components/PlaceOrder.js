@@ -4,10 +4,14 @@ import Burger from "./Burger";
 import OrderForm from "./OrderForm";
 import { useNavigate } from "react-router-dom";
 
-const PlaceOrder = () => {
+const PlaceOrder = ({ ingredientsImages, order, setIngredientsImages }) => {
   const [open, setOpen] = useState(false);
 
   let navigate = useNavigate();
+  const handleCancel = () => {
+    navigate("/");
+    setIngredientsImages([]);
+  };
 
   return (
     <>
@@ -23,7 +27,7 @@ const PlaceOrder = () => {
           justifyContent={"center"}
           alignItems={"center"}
         >
-          <Burger />
+          <Burger ingredientsImages={ingredientsImages} />
           <Stack
             spacing={1}
             marginBottom={5}
@@ -32,11 +36,7 @@ const PlaceOrder = () => {
             mt={5}
             justifyContent={"center"}
           >
-            <Button
-              variant="outlined"
-              color="error"
-              onClick={() => navigate("/")}
-            >
+            <Button variant="outlined" color="error" onClick={handleCancel}>
               Cancel
             </Button>
             <Button
@@ -56,7 +56,7 @@ const PlaceOrder = () => {
           sm={12}
           display={open ? "block" : "none"}
         >
-          <OrderForm />
+          <OrderForm order={order}/>
         </Grid>
       </Grid>
     </>

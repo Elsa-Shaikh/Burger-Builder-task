@@ -14,12 +14,13 @@ import {
 import React, { useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
+  let navigate = useNavigate();
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -75,6 +76,7 @@ const Login = () => {
                 variant="body2"
                 textAlign={"center"}
                 sx={{ cursor: "pointer" }}
+                onClick={() => navigate("/register")}
               >
                 Don't have an account? Register
               </Typography>

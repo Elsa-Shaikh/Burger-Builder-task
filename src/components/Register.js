@@ -14,10 +14,11 @@ import {
 import React, { useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-
+  let navigate = useNavigate();
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
@@ -77,11 +78,14 @@ const Register = () => {
                 />
               </FormControl>
 
-              <Button variant="contained" sx={{backgroundColor:'black'}}>Register</Button>
+              <Button variant="contained" sx={{ backgroundColor: "black" }}>
+                Register
+              </Button>
               <Typography
                 variant="body2"
                 textAlign={"center"}
                 sx={{ cursor: "pointer" }}
+                onClick={() => navigate("/login")}
               >
                 Already have an account? Login
               </Typography>

@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 
-const OrderForm = () => {
+const OrderForm = ({order}) => {
   const [selectedOption, setSelectedOption] = useState("");
 
   const handleOptionChange = (e) => {
