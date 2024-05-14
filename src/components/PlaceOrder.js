@@ -2,9 +2,13 @@ import { Button, Grid, Stack } from "@mui/material";
 import React, { useState } from "react";
 import Burger from "./Burger";
 import OrderForm from "./OrderForm";
+import { useNavigate } from "react-router-dom";
 
 const PlaceOrder = () => {
   const [open, setOpen] = useState(false);
+
+  let navigate = useNavigate();
+
   return (
     <>
       <Grid container mt={2} p={6}>
@@ -28,7 +32,11 @@ const PlaceOrder = () => {
             mt={5}
             justifyContent={"center"}
           >
-            <Button variant="outlined" color="error">
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={() => navigate("/")}
+            >
               Cancel
             </Button>
             <Button
