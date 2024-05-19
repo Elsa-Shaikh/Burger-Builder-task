@@ -1,3 +1,37 @@
+# Burger Builder App
+
+This is a simple burger builder app where you need to register first and then log in with your credentials. In this app, you can add burger ingredients, place orders, and view your orders. It provides a good understanding of authentication, private routes, API creation, and frontend implementation using React and Node.js. The backend of this app is built using Node.js, making it a MERN (MongoDB, Express.js, React, Node.js) project.
+
+# Technology 
+
+ReactJS 
+NodeJS
+Mongodb
+ExpressJS
+
+# Packages
+
+moment
+jsonwebtoken
+nodemon
+dotenv
+react-router-dom
+material ui / icon /styled
+react-toastify
+bcrypt
+cors
+express-async-handler
+mongoose
+
+# API End-Points
+
+/api/users/register (POST)
+/api/users/login    (POST)
+/api/users/get      (GET)
+
+/api/burger/order   (POST)
+/api/burger/read    (GET)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
