@@ -11,9 +11,23 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { Avatar, Tooltip } from "@mui/material";
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const { logout } = React.useContext(AuthContext);
+  const [user, setUser] = React.useState({});
+  const { currentUser } = React.useContext(AuthContext);
+
+  React.useEffect(() => {
+    handleUser();
+  }, []);
+
+  const handleUser = async () => {
+    const response = await currentUser();
+    setUser(response);
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -21,6 +35,15 @@ function Navbar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
   };
 
   let navigate = useNavigate();
@@ -44,12 +67,17 @@ function Navbar() {
               color: "inherit",
               cursor: "pointer",
             }}
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/home")}
           >
             Burger
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "flex", md: "none" },
+            }}
+          >
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -81,7 +109,7 @@ function Navbar() {
               <MenuItem
                 onClick={() => {
                   handleCloseNavMenu();
-                  navigate("/");
+                  navigate("/home");
                 }}
               >
                 <Typography textAlign="center">Home</Typography>
@@ -89,7 +117,7 @@ function Navbar() {
               <MenuItem
                 onClick={() => {
                   handleCloseNavMenu();
-                  navigate("/");
+                  navigate("/orders");
                 }}
               >
                 <Typography textAlign="center">Order</Typography>
@@ -97,22 +125,7 @@ function Navbar() {
               <MenuItem
                 onClick={() => {
                   handleCloseNavMenu();
-                  navigate("/login");
-                }}
-              >
-                <Typography textAlign="center">Login</Typography>
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleCloseNavMenu();
-                  navigate("/register");
-                }}
-              >
-                <Typography textAlign="center">Register</Typography>
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleCloseNavMenu();
+                  logout();
                   navigate("/");
                 }}
               >
@@ -136,7 +149,7 @@ function Navbar() {
               color: "inherit",
               cursor: "pointer",
             }}
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/home")}
           >
             Burger
           </Typography>
@@ -150,34 +163,55 @@ function Navbar() {
           >
             <Button
               sx={{ my: 2, color: "white", display: "block" }}
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/home")}
             >
               Home
             </Button>
             <Button
               sx={{ my: 2, color: "white", display: "block" }}
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/orders")}
             >
               Order
             </Button>
             <Button
               sx={{ my: 2, color: "white", display: "block" }}
-              onClick={() => navigate("/login")}
-            >
-              Login
-            </Button>
-            <Button
-              sx={{ my: 2, color: "white", display: "block" }}
-              onClick={() => navigate("/register")}
-            >
-              Register
-            </Button>
-            <Button
-              sx={{ my: 2, color: "white", display: "block" }}
-              onClick={() => navigate("/")}
+              onClick={() => {
+                logout();
+                navigate("/");
+              }}
             >
               Logout
             </Button>
+          </Box>
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Profile">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="user avatar" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              <MenuItem>
+                <Typography textAlign="center">{user?.username}</Typography>
+              </MenuItem>
+              <MenuItem>
+                <Typography textAlign="center">{user?.email}</Typography>
+              </MenuItem>
+            </Menu>
           </Box>
         </Toolbar>
       </Container>

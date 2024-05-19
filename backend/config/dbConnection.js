@@ -9,8 +9,8 @@ const connectDb = async () => {
       connect.connection.name
     );
   } catch (error) {
-    console.log(error);
-    proccess.exit(1);
+    console.log("Connection Failed !", error);
+    // proccess.exit(1);
   }
 };
 module.exports = connectDb;

@@ -8,12 +8,18 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-export default function DialogBox({ open, handleClose, order }) {
+export default function DialogBox({
+  open,
+  handleClose,
+  order,
+  handleOrderState,
+}) {
   let navigate = useNavigate();
 
   const handleClick = () => {
     navigate("/checkout");
   };
+
   return (
     <React.Fragment>
       <Dialog
@@ -40,7 +46,14 @@ export default function DialogBox({ open, handleClose, order }) {
           <Button onClick={handleClose} variant="outlined" color="error">
             Dismiss
           </Button>
-          <Button onClick={handleClick} variant="outlined" color="success">
+          <Button
+            onClick={() => {
+              handleOrderState();
+              handleClick();
+            }}
+            variant="outlined"
+            color="success"
+          >
             Continue
           </Button>
         </DialogActions>

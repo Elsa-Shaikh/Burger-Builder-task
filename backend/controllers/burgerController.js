@@ -37,11 +37,49 @@ const orderBurger = asyncHandler(async (req, res) => {
     user_id: req.user.id,
   });
   res.status(201).json({
+    success: true,
     message: "Order has been placed successfully!",
     data: burger_data,
   });
 });
 
+//@desc Get Order Burger Details
+//@route GET /api/burger/read
+//@access private
+
+const readOrders = asyncHandler(async (req, res) => {
+  try {
+    const order_data = await Burger.find({ user_id: req.user.id }).sort({
+      createdAt: -1,
+    });
+    const order_count = await Burger.countDocuments({ user_id: req.user.id });
+
+    // Check if order_data is not empty
+    if (order_data.length > 0) {
+      res.status(200).json({
+        success: true,
+        message: "Orders have been fetched successfully!",
+        count: order_count,
+        data: order_data,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "No orders found for this user.",
+        count: 0,
+        data: [],
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
 module.exports = {
   orderBurger,
+  readOrders,
 };

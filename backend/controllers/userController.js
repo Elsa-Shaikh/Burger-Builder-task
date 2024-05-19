@@ -13,8 +13,8 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("All fields are mandatory!");
   }
-   // Check password length
-   if (password.length < 6) {
+  // Check password length
+  if (password.length < 6) {
     res.status(400);
     throw new Error("Password must be at least 6 characters long!");
   }
@@ -35,6 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
   });
   if (user) {
     res.status(201).json({
+      success: true,
       message: "Register Successfully!",
       _id: user._id,
       email: user.email,
@@ -68,9 +69,11 @@ const loginUser = asyncHandler(async (req, res) => {
         },
       },
       process.env.ACCESS_TOKEN_SECRET_KEY,
-      { expiresIn: "30m" }
+      { expiresIn: "240m" }
     );
-    res.status(200).json({ message: "Login Successfully!", accessToken });
+    res
+      .status(200)
+      .json({ success: true, message: "Login Successfully!", accessToken });
   } else {
     res.status(401);
     throw new Error("Email or Password is incorrect!");

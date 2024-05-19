@@ -17,27 +17,37 @@ import Cheese from "../Assets/cheese.jpg";
 import Meat from "../Assets/meat.jpg";
 import Burger from "./Burger";
 
-const Order = ({ ingredientsImages, setIngredientsImages ,order }) => {
+const Order = ({
+  ingredientsImages,
+  setIngredientsImages,
+  order,
+  setOrder,
+}) => {
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState(5);
   const [salad, setSalad] = useState(0);
   const [meat, setMeat] = useState(0);
   const [cheese, setCheese] = useState(0);
   const [bacon, setBacon] = useState(0);
-  order = {
-    bacon,
-    cheese,
-    meat,
-    salad,
-  };
+
   const handleClickOpen = () => {
+    handleOrderState();
     setOpen(true);
+  };
+
+  const handleOrderState = () => {
+    setOrder({
+      salad,
+      cheese,
+      meat,
+      bacon,
+      current,
+    });
   };
 
   const handleClose = () => {
     setOpen(false);
   };
-
   const handleIncrement = (ingredient, img) => {
     switch (ingredient) {
       case "salad":
@@ -125,12 +135,17 @@ const Order = ({ ingredientsImages, setIngredientsImages ,order }) => {
 
   return (
     <>
-      <Grid item xs={12} md={6} lg={6} sm={12} mt={3}>
-        <Box p={2} width={"300px"} marginLeft={"auto"} marginRight={"auto"}>
+      <Grid item xs={12} md={6} lg={6} sm={12} mt={{ md: 3, sm: 3, xs: 2 }}>
+        <Box
+          p={{ md: 2, sm: 0, xs: 1 }}
+          width={"300px"}
+          marginLeft={"auto"}
+          marginRight={"auto"}
+        >
           <Stack
             direction={"row"}
             spacing={2}
-            p={2}
+            p={{ md: 2, sm: 1, xs: 2 }}
             boxShadow={`0px 4px 8px rgba(0, 0, 0, 0.1)`}
             justifyContent={"space-between"}
           >
@@ -158,7 +173,7 @@ const Order = ({ ingredientsImages, setIngredientsImages ,order }) => {
           <Stack
             direction={"row"}
             spacing={2}
-            p={2}
+            p={{ md: 2, sm: 1, xs: 2 }}
             boxShadow={`0px 4px 8px rgba(0, 0, 0, 0.1)`}
             justifyContent={"space-between"}
           >
@@ -186,7 +201,7 @@ const Order = ({ ingredientsImages, setIngredientsImages ,order }) => {
           <Stack
             direction={"row"}
             spacing={2}
-            p={2}
+            p={{ md: 2, sm: 1, xs: 2 }}
             boxShadow={`0px 4px 8px rgba(0, 0, 0, 0.1)`}
             justifyContent={"space-between"}
           >
@@ -214,7 +229,7 @@ const Order = ({ ingredientsImages, setIngredientsImages ,order }) => {
           <Stack
             direction={"row"}
             spacing={2}
-            p={2}
+            p={{ md: 2, sm: 1, xs: 2 }}
             boxShadow={`0px 4px 8px rgba(0, 0, 0, 0.1)`}
             justifyContent={"space-between"}
           >
@@ -239,7 +254,7 @@ const Order = ({ ingredientsImages, setIngredientsImages ,order }) => {
               </IconButton>
             </Paper>
           </Stack>
-          <Stack direction={"row"} p={3}>
+          <Stack direction={"row"} p={{ md: 3, sm: 1, xs: 3 }}>
             <Typography variant="body1" fontSize={"1.5rem"}>
               Current Price: {current}.00
             </Typography>
@@ -262,12 +277,20 @@ const Order = ({ ingredientsImages, setIngredientsImages ,order }) => {
         md={6}
         lg={6}
         sm={12}
-        borderLeft={"5px dotted grey"}
+        borderLeft={{ md: "5px dotted grey", sm: "none" }}
         mt={3}
       >
-        <Burger ingredientsImages={ingredientsImages} />
+        <Burger
+          ingredientsImages={ingredientsImages}
+          title="Make Your Burger"
+        />
       </Grid>
-      <DialogBox open={open} handleClose={handleClose} order={order} />
+      <DialogBox
+        open={open}
+        handleClose={handleClose}
+        order={order}
+        handleOrderState={handleOrderState}
+      />
     </>
   );
 };
